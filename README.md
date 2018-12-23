@@ -7,6 +7,7 @@ I am building controlable lights on my fiat panda roof. I use a small mqtt scrip
 - create (webpage) control for the lights and their functions
 - add more functions
 - make it shoot lazerbeams
+- add voice control
 
 [ LATER PROJECTS ]
 - automatic lights
