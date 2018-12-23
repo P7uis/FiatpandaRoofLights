@@ -6,6 +6,7 @@ I am building controlable lights on my fiat panda roof. I use a small mqtt scrip
 - set up rpi0 with touchdisplay or old android phone somewhere in the car. my initial thought is to build it in the the drivers sunvisor.
 - create (webpage) control for the lights and their functions
 - add more functions
+- make it shoot lazerbeams
 
 [ LATER PROJECTS ]
 - automatic lights
