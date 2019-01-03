@@ -8,6 +8,9 @@ I am building controlable lights on my fiat panda roof. I use a small mqtt scrip
 - make it shoot lazerbeams
 - add voice control
 
+[ CURRENT STRUGGLES ]
+- I did a fresh apache 2 install with php7.0 to host the simple web interface. The goal is to update a string to a file an       overwrite that with every button. the webchoose script will read that file every time it loops and executes the connected     function part with the mqtt commands.  I cant seem to get php to update to the file as of now. I tried multiple things last   thing I did ist the index.php file.
+
 [ LATER PROJECTS ]
 - led strip side indicators/deco ligts when door opened
 - automatic lights
