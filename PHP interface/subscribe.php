@@ -4,7 +4,7 @@ ini_set('display_errors', '1');
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-define('BROKER', '172.10.0.60');
+define('BROKER', 'mitt.p7uis.nl');
 define('PORT', 1883);
 define('CLIENT_ID', "Aap");
 
