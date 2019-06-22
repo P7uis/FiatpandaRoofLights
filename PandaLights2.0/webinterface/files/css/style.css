@@ -1,0 +1,15 @@
+body{
+  overflow-x: hidden;
+  height: 100% !important;
+}
+.content{
+  height: 100% !important;
+  padding: 1%;
+}
+.SettingsDiv{
+  overflow: hidden;
+  border-radius: 15px;
+  margin: 1%;
+  padding: 3%;
+  height: 100%;
+}

@@ -1,10 +1,11 @@
 <?php
-  if(!isset($start)){
-    echo "start hasn't been set!";
-    die("start hasn't been set!");
-  }
-  else{
-      if($startselection[0])include("/var/www/html/files/php/functions.php");
-      if($startselection[1])include("/var/www/html/files/php/head.php");
-      if($startselection[2])include("/var/www/html/files/php/nav.php");
-  }
+//error reporting
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+//unclude all other selected start files
+if(!isset($start))die("start hasn't been set!");
+else{
+if($start[0])include("$docroot/files/php/functions.php");
+if($start[1])include("$docroot/files/php/head.php");
+if($start[2])include("$docroot/files/php/nav.php");
+}
