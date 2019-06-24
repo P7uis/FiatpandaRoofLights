@@ -10,20 +10,34 @@
  <div class="content">
    <div class="container">
             <div class="row">
+                <div class="col-sm">
+                  <div class="row">
+                    <div class="col-sm SettingsDiv SettingsDivNest">
+                       <h3>Theme (<?php echo ThemeCheck(); ?>)</h3>
+                       <form action="submit.php" method="post"><br>
+                         <input type="hidden" value="<?php echo ThemeCheck(); ?>" name="theme">
+                         <input type="submit" value="Toggle Theme" class="btn btn-primary">
+                       </form>
 
-               <div class="col-sm SettingsDiv">
-                  <h3>Theme (<?php echo ThemeCheck(); ?>)</h3>
-                  <form action="submit.php" method="post"><br>
-                    <input type="hidden" value="<?php echo ThemeCheck(); ?>" name="theme">
-                    <input type="submit" value="Toggle Theme" class="btn btn-primary">
-                  </form>
-               </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm SettingsDiv SettingsDivNest">
+                       <h3>Set light theme hours</h3>
+                       <form action="submit.php" method="post"><br>
+                         <input type="checkbox" value="" name="themeauto" class="input-style"> Toggle automatic change<br><br>
+                         <input type="time" value="" name="themestart" class="form-control input-style"><br>
+                         <input type="time" value="" name="themeend" class="form-control input-style"><br>
+                         <input type="submit" value="Change" class="btn btn-primary">
+                       </form>
+                    </div>
+                  </div>
+                </div>
 
-          </div>
 
-          <div class="row">
 
-             <div class="col-sm SettingsDiv">
+
+             <div class="col-sm-7 SettingsDiv">
                 <h3>WPA Config</h3>
                   <?php
                     $ssid = False;
@@ -55,8 +69,7 @@
                 ?>
                 </form>
              </div>
-
-        </div>
+           </div>
 
          </div>
  </div>

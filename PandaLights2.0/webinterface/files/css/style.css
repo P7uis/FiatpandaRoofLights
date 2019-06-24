@@ -13,3 +13,13 @@ body{
   padding: 3%;
   height: 100%;
 }
+.SettingsDivNest{
+  margin: 2.523%;
+  padding: 7.565%;
+}
+@media only screen and (max-width: 600px){
+  .SettingsDivNest{
+    margin: 1%;
+    padding: 3%;
+  }
+}
