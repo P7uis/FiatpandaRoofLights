@@ -1,7 +1,16 @@
+body{
+  background-color: #232323;
+  color: #ffffff;
+}
 .content{
   background-color: #232323;
   color: #ffffff;
 }
 .SettingsDiv{
   background-color: #343a40;
+}
+.input-style{
+  background-color: #232323 !important;
+  color: #ffffff !important;
+  border: 1px solid black;
 }

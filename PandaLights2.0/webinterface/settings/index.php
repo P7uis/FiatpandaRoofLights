@@ -21,5 +21,42 @@
 
           </div>
 
+          <div class="row">
+
+             <div class="col-sm SettingsDiv">
+                <h3>WPA Config</h3>
+                  <?php
+                    $ssid = False;
+                    $psk = False;
+                    $wpaconflist = explode(PHP_EOL, WPAconfRead());
+                    foreach ($wpaconflist as $wpaconf) {
+
+                      if (strpos($wpaconf, 'ssid')){
+                        echo '<br><div class="WPADiv">';
+                        echo '<form action="submit.php" method="post">';
+                        echo '<input type="text" value="'.StringBetween($wpaconf, '"', '"').'" class="form-control input-style" name="wpa-ssid"><br>';
+                        echo '<input type="hidden" value="'.StringBetween($wpaconf, '"', '"').'" name="wpa-ssid-old">';
+                        $ssidold = StringBetween($wpaconf, '"', '"');
+                      }
+                      else if (strpos($wpaconf, 'psk')){
+                        echo '<input type="hidden" value="'.StringBetween($wpaconf, '"', '"').'" name="wpa-psk-old">';
+                        echo '<input type="password" value="'.StringBetween($wpaconf, '"', '"').'" class="form-control input-style" name="wpa-psk"><br>';
+                        echo '<input type="submit" value="Change" class="btn btn-primary"> ';
+                        $pskold = StringBetween($wpaconf, '"', '"');
+                        echo '</form>';
+                        echo '<form action="submit.php" method="post">';
+                        echo '<input type="submit" value="Delete" class="btn btn-danger">';
+                        echo '<input type="hidden" value="'.$ssidold.'" name="wpa-ssid-del">';
+                        echo '<input type="hidden" value="'.$pskold.'" name="wpa-psk-del">';
+                        echo '</form>';
+                        echo '</div>';
+                      }
+                    }
+                ?>
+                </form>
+             </div>
+
+        </div>
+
          </div>
  </div>

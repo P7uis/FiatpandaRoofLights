@@ -14,4 +14,21 @@
     header("location: ../settings");
   }
 
+  if(isset($_POST['wpa-ssid']) && isset($_POST['wpa-ssid-old']) && isset($_POST['wpa-psk']) && isset($_POST['wpa-psk-old'])){
+    $ssid = $_POST['wpa-ssid'];
+    $ssidold = $_POST['wpa-ssid-old'];
+    $psk = $_POST['wpa-psk'];
+    $pskold = $_POST['wpa-psk-old'];
+    WPAconfWrite($ssid, $ssidold, $psk, $pskold);
+    header("location: ../settings");
+  }
+
+  if(isset($_POST['wpa-ssid-del']) && isset($_POST['wpa-psk-del'])){
+    $ssid = $_POST['wpa-ssid-del'];
+    $psk = $_POST['wpa-psk-del'];
+
+    $wpaconflist = explode(PHP_EOL, WPAconfDelete($ssid, $psk));
+    header("location: ../settings");
+  }
+
  ?>
