@@ -27,7 +27,12 @@ if(isset($_POST['name']) && isset($_POST['id'])){
     }
     else break;
   }
+  ProfileEditor($id, $name, $cycles);
+  header("location: ../profiles");
 }
-ProfileEditor($id, $name, $cycles);
-header("location: ../profiles");
+if(isset($_POST['delete'])){
+  $id = "ID-".$_POST['delete'];
+  ProfileDeleter($id);
+  header("location: ../profiles");
+}
  ?>

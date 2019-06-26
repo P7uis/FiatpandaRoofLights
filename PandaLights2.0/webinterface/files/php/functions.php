@@ -92,8 +92,10 @@ function ProfileLister(){
           <br>
           <input type="submit" value="Change" class="btn btn-primary btnprofilesettings">
           </form><form action="submit.php" method="post" style="display: inline;">
+          <input type="hidden" value="'.$id[1].'" name="delete">
           <input type="submit" value="Delete" class="btn btn-danger btnprofilesettings">
           </form><form action="submit.php" method="post" style="display: inline;">
+          <input type="hidden" value="'.$id[1].'" name="enable">
           <input type="submit" value="Enable" class="btn btn-success btnprofilesettings"></div></form>
           ';
         }
@@ -121,21 +123,42 @@ function ProfileEditor($id, $name, $cycles){
       if($i < $ii)$eol = PHP_EOL;
       else $eol = NULL;
 
-      if($i > 0 && $profilemain[$i-1] == $id){
-        $profilesnew = $profilesnew.$name.$eol;
-      }
-      else if($i > 1 && $profilemain[$i-2] == $id){
-        $profilesnew = $profilesnew.$cycles.$eol;
-      }
-      else{
-        $profilesnew = $profilesnew.$profilemain[$i].$eol;
-      }
+      if($i > 0 && $profilemain[$i-1] == $id){$profilesnew = $profilesnew.$name.$eol;}
+      else if($i > 1 && $profilemain[$i-2] == $id){$profilesnew = $profilesnew.$cycles.$eol;}
+      else{$profilesnew = $profilesnew.$profilemain[$i].$eol;}
   }
   fclose($profilesR);
   $profilesW = fopen("/home/$user/panda/profiles.conf", "w");
   fwrite($profilesW, $profilesnew);
   fclose($profilesW);
 }}
+
+function ProfileDeleter($id){
+  $user = get_current_user();
+  $profilesR = fopen("/home/$user/panda/profiles.conf", "r");
+  if (filesize("/home/$user/panda/profiles.conf") == 0){
+    fclose($profilesR);
+    return;
+  }
+  else{
+    $profilemain = explode(PHP_EOL, fread($profilesR, filesize("/home/$user/panda/profiles.conf")));
+    $profilesnew = "";
+    $i = 0;
+    $ii = count($profilemain)-1;
+    for($i; $i <= $ii; $i++){
+      if($i < $ii)$eol = PHP_EOL;
+      else $eol = NULL;
+      if($profilemain[$i] == $id){}
+      else if($i > 0 && $profilemain[$i-1] == $id){}
+      else if($i > 1 && $profilemain[$i-2] == $id){}
+      else{$profilesnew = $profilesnew.$profilemain[$i].$eol;}
+  }
+  fclose($profilesR);
+  $profilesW = fopen("/home/$user/panda/profiles.conf", "w");
+  fwrite($profilesW, $profilesnew);
+  fclose($profilesW);
+}}
+
 
 
 function WPAconfRead(){
