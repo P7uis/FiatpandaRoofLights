@@ -1,25 +1,50 @@
 body{
   overflow-x: hidden;
+  overflow-y: hidden;
   height: 100% !important;
 }
 .content{
   height: 100% !important;
   padding: 1%;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 .SettingsDiv{
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   border-radius: 15px;
   margin: 1%;
   padding: 3%;
-  height: 100%;
+  height: auto;
 }
 .SettingsDivNest{
   margin: 2.523%;
   padding: 7.565%;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 @media only screen and (max-width: 600px){
   .SettingsDivNest{
     margin: 1%;
     padding: 3%;
   }
+}
+=
+@media only screen and (max-width: 600px){
+  .profilecheck{
+    /* Double-sized Checkboxes */
+    -ms-transform: scale(2); /* IE */
+    -moz-transform: scale(2); /* FF */
+    -webkit-transform: scale(2); /* Safari and Chrome */
+    -o-transform: scale(2); /* Opera */
+    transform: scale(2);
+    padding: 10px;
+  }
+}
+.btnprofilesettings{
+  width: 30%;
+  padding: 1% !important;
+  margin: 0 !important;
+  display: inline-block !important;
+  text-align: center !important;
 }

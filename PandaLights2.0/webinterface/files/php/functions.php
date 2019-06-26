@@ -41,38 +41,102 @@ function ProfileLister(){
     return;
   }
   else{
-    echo "<form action='submit.php' method='post'>";
+    echo '<div class="container"><div class="row">';
     $profilemain = explode(PHP_EOL, fread($profiles, filesize("/home/$user/panda/profiles.conf")));
     foreach ($profilemain as $profile) {
-      if (substr($profile, 0, 4) == "NAME"){
-        $name = explode('-', $profile);
-        echo "Profile: ".$name[1]."<br>";
+      if (substr($profile, 0, 2) == "ID"){
+        echo '<div class="col-sm-4 SettingsDiv">';
+        echo "<form action='submit.php' method='post' style='display:inline;'>";
+        $id = explode('-', $profile);
+        echo '<input type="hidden" value="'.$id[1].'" name="id">';
       }
-      else{
+      else if (substr($profile, 0, 4) == "NAME"){
+        $name = explode('-', $profile);
+
+        echo "<h3>Profile: ".$name[1]."</h3>";
+        echo '<div class="input-group mb-1">
+              <input type="text" class="form-control input-style" placeholder="profile name" value="'.$name[1].'" name="name">
+              <div class="input-group-append "><span class="input-group-text alt-input-style">profile name</span></div></div>';
+        echo '<div class="input-group mb-1">
+              <input type="number" class="form-control input-style" min=0.1 max=60 step=0.1 value="1" placeholder="delay">
+              <div class="input-group-append "><span class="input-group-text alt-input-style">change all delays</span></div></div><br>';
+      }
+
+      else if (substr($profile, 0, 6) == "CYCLES"){
           $cycles = explode('-', $profile);
           $i = 0;
           foreach ($cycles as $cycle) {
             if ($cycle == "CYCLES"){}
-            else{
+            else if(strlen($cycle) >= 5){
               $checkboxes = explode(',', $cycle);
               $j = 0;
-              echo '<input type="hidden" name="row'.$i.'">';
+              echo '<div class="input-group mb-1">';
+              echo '<div class="input-group-prepend">';
+              echo '<div class="input-group-text alt-input-style" >';
               foreach ($checkboxes as $checkbox) {
-                if($checkbox == '1')echo '<input type="checkbox" checked value="1" name="profile'.$i.$j.'">';
-                else if($checkbox == '0')echo '<input type="checkbox" value="1" name="profile'.$i.$j.'">';
+                if($checkbox == '1')echo '<input type="checkbox" checked value="1" name="profile'.$i.$j.'" class="profilecheck">&ensp;';
+                else if($checkbox == '0')echo '<input type="checkbox" value="1" name="profile'.$i.$j.'" class="profilecheck">&ensp;';
                 $j++;
               }
-              $i++;
-              echo "<br>";
+              echo '&ensp;</div></div>';
+            }
+            else{
+                echo '<input type="number" min=0.1 max=60 step=0.1 name="delay'.$i.'" value="'.StringBetween($cycle, '[', ']').'" class="form-control  input-style" placeholder="delay">';
+                $i++;
+                echo "</div>";
             }
           }
 
+          //echo "<br><input type='submit' class='btn btn-primary'></form></div>";
+          echo '
+          <br>
+          <input type="submit" value="Change" class="btn btn-primary btnprofilesettings">
+          </form><form action="submit.php" method="post" style="display: inline;">
+          <input type="submit" value="Delete" class="btn btn-danger btnprofilesettings">
+          </form><form action="submit.php" method="post" style="display: inline;">
+          <input type="submit" value="Enable" class="btn btn-success btnprofilesettings"></div></form>
+          ';
         }
     }
-    echo "<input type='submit'></form>";
   }
+  echo "</div></div>";
   fclose($profiles);
 }
+
+function ProfileEditor($id, $name, $cycles){
+  $user = get_current_user();
+  $profilesR = fopen("/home/$user/panda/profiles.conf", "r");
+  if (filesize("/home/$user/panda/profiles.conf") == 0){
+    fclose($profilesR);
+    return;
+  }
+  else{
+    $profilemain = explode(PHP_EOL, fread($profilesR, filesize("/home/$user/panda/profiles.conf")));
+    $profilesnew = "";
+    $i = 0;
+    $ii = count($profilemain)-1;
+    for($i; $i <= $ii; $i++){
+      //TODO random number generator for create function
+      //echo round($salt = uniqid(mt_rand(), true))."<br>";
+      if($i < $ii)$eol = PHP_EOL;
+      else $eol = NULL;
+
+      if($i > 0 && $profilemain[$i-1] == $id){
+        $profilesnew = $profilesnew.$name.$eol;
+      }
+      else if($i > 1 && $profilemain[$i-2] == $id){
+        $profilesnew = $profilesnew.$cycles.$eol;
+      }
+      else{
+        $profilesnew = $profilesnew.$profilemain[$i].$eol;
+      }
+  }
+  fclose($profilesR);
+  $profilesW = fopen("/home/$user/panda/profiles.conf", "w");
+  fwrite($profilesW, $profilesnew);
+  fclose($profilesW);
+}}
+
 
 function WPAconfRead(){
   $WPAconfR = fopen("/etc/wpa_supplicant/wpa_supplicant-wlan1.conf", "r");

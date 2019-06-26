@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-<?php echo ThemeCheck(); ?> bg-<?php echo ThemeCheck(); ?>">
+<nav class="navbar navbar-expand-lg navbar-<?php echo ThemeCheck(); ?> bg-<?php echo ThemeCheck(); ?> nav-style">
   <a class="navbar-brand" href="#">
     <img src="/files/img/panda.png" width="30" height="30" class="d-inline-block align-top" alt="">
     Panda - <?php echo $page; ?>
