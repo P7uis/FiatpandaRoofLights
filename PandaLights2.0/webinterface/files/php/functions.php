@@ -34,6 +34,40 @@ function ThemeWrite($optionW){
 }
 
 function ProfileLister(){
+  echo '
+  <div class="container"><div class="row">
+  <div class="col-sm-4 SettingsDiv">
+     <form action="submit.php" method="post" style="display:inline;">
+        <input type="hidden" value="17275737505" name="id">
+        <h3>New Profile</h3>
+        <div class="input-group mb-1">
+           <input type="text" class="form-control input-style" placeholder="profile name" name="name">
+           <div class="input-group-append "><span class="input-group-text alt-input-style">profile name</span></div>
+        </div>
+        <div class="input-group mb-1">
+           <input type="number" class="form-control input-style" min="0.1" max="60" step="0.1" value="1" placeholder="delay">
+           <div class="input-group-append "><span class="input-group-text alt-input-style">change all delays</span></div>
+        </div>
+        <br>
+        <div id="checkboxrows">
+        <div id="checkboxrow0" class="input-group mb-1">
+           <div class="input-group-prepend">
+              <div class="input-group-text alt-input-style">
+                <input type="checkbox" value="1" name="profile00" class="profilecheck">&ensp;
+                <input type="checkbox" value="1" name="profile01" class="profilecheck">&ensp;
+                <input type="checkbox" value="1" name="profile02" class="profilecheck">&ensp;
+                <input type="checkbox" value="1" name="profile03" class="profilecheck">&ensp;
+                <input type="checkbox" value="1" name="profile04" class="profilecheck">&ensp;
+              </div>
+           </div>
+           <input type="number" min="0.1" max="60" step="0.1" name="delay0" value="1" class="form-control  input-style" placeholder="delay">
+        </div>
+        </div>
+        <br>
+        <input type="submit" value="Create" class="btn btn-primary btnprofilesettingscreate">
+        <button type="button" onclick="appendText()" class="btn btn-warning btnprofilesettingscreate">Add Line</button>
+     </form></div>
+  ';
   $user = get_current_user();
   $profiles = fopen("/home/$user/panda/profiles.conf", "r");
   if (filesize("/home/$user/panda/profiles.conf") == 0){
@@ -41,14 +75,14 @@ function ProfileLister(){
     return;
   }
   else{
-    echo '<div class="container"><div class="row">';
+
     $profilemain = explode(PHP_EOL, fread($profiles, filesize("/home/$user/panda/profiles.conf")));
     foreach ($profilemain as $profile) {
       if (substr($profile, 0, 2) == "ID"){
         echo '<div class="col-sm-4 SettingsDiv">';
         echo "<form action='submit.php' method='post' style='display:inline;'>";
         $id = explode('-', $profile);
-        echo '<input type="hidden" value="'.$id[1].'" name="id">';
+        echo '<input type="hidden" value="'.$id[1].'" name="edit">';
       }
       else if (substr($profile, 0, 4) == "NAME"){
         $name = explode('-', $profile);
@@ -67,7 +101,7 @@ function ProfileLister(){
           $i = 0;
           foreach ($cycles as $cycle) {
             if ($cycle == "CYCLES"){}
-            else if(strlen($cycle) >= 5){
+            else if(strlen($cycle) > 5){
               $checkboxes = explode(',', $cycle);
               $j = 0;
               echo '<div class="input-group mb-1">';
@@ -87,7 +121,6 @@ function ProfileLister(){
             }
           }
 
-          //echo "<br><input type='submit' class='btn btn-primary'></form></div>";
           echo '
           <br>
           <input type="submit" value="Change" class="btn btn-primary btnprofilesettings">
@@ -101,6 +134,7 @@ function ProfileLister(){
         }
     }
   }
+
   echo "</div></div>";
   fclose($profiles);
 }

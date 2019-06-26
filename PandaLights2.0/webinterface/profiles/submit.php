@@ -8,8 +8,8 @@
   include("$docroot/files/php/start.php");
 
 $i = 0;
-if(isset($_POST['name']) && isset($_POST['id'])){
-  $id = "ID-".$_POST['id'];
+if(isset($_POST['name']) && isset($_POST['edit'])){
+  $id = "ID-".$_POST['edit'];
   $name = "NAME-".$_POST['name'];
   $cycles= "CYCLES";
   while (True){

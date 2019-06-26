@@ -9,6 +9,9 @@ body{
   overflow-x: hidden;
   overflow-y: scroll;
 }
+.container{
+  margin-bottom: 10%;
+}
 .SettingsDiv{
   overflow-x: hidden;
   overflow-y: auto;
@@ -42,8 +45,13 @@ body{
   }
 }
 .btnprofilesettings{
-  width: 30%;
-  padding: 1% !important;
+  width: 32%;
+  margin: 0 !important;
+  display: inline-block !important;
+  text-align: center !important;
+}
+.btnprofilesettingscreate{
+  width: 49% !important;
   margin: 0 !important;
   display: inline-block !important;
   text-align: center !important;
