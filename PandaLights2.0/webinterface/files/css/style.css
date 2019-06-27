@@ -45,14 +45,9 @@ body{
   }
 }
 .btnprofilesettings{
-  width: 32%;
-  margin: 0 !important;
-  display: inline-block !important;
-  text-align: center !important;
-}
-.btnprofilesettingscreate{
   width: 49% !important;
-  margin: 0 !important;
+  margin: 0% !important;
+  margin-bottom: 2% !important;
   display: inline-block !important;
   text-align: center !important;
 }

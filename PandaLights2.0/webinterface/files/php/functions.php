@@ -34,6 +34,7 @@ function ThemeWrite($optionW){
 }
 
 function ProfileLister(){
+  $h = 0;
   echo '
   <div class="container"><div class="row">
   <div class="col-sm-4 SettingsDiv">
@@ -49,23 +50,25 @@ function ProfileLister(){
            <div class="input-group-append "><span class="input-group-text alt-input-style">change all delays</span></div>
         </div>
         <br>
-        <div id="checkboxrows">
+        <div id="checkboxrows0">
         <div id="checkboxrow0" class="input-group mb-1">
            <div class="input-group-prepend">
               <div class="input-group-text alt-input-style">
-                <input type="checkbox" value="1" name="profile00" class="profilecheck">&ensp;
-                <input type="checkbox" value="1" name="profile01" class="profilecheck">&ensp;
-                <input type="checkbox" value="1" name="profile02" class="profilecheck">&ensp;
-                <input type="checkbox" value="1" name="profile03" class="profilecheck">&ensp;
-                <input type="checkbox" value="1" name="profile04" class="profilecheck">&ensp;
+                <input type="checkbox" onchange="appendText('.$h.')" value="1" name="profile000" class="profilecheck">&ensp;
+                <input type="checkbox" onchange="appendText('.$h.')" value="1" name="profile001" class="profilecheck">&ensp;
+                <input type="checkbox" onchange="appendText('.$h.')" value="1" name="profile002" class="profilecheck">&ensp;
+                <input type="checkbox" onchange="appendText('.$h.')" value="1" name="profile003" class="profilecheck">&ensp;
+                <input type="checkbox" onchange="appendText('.$h.')" value="1" name="profile004" class="profilecheck">&ensp;
               </div>
            </div>
            <input type="number" min="0.1" max="60" step="0.1" name="delay0" value="1" class="form-control  input-style" placeholder="delay">
         </div>
         </div>
         <br>
-        <input type="submit" value="Create" class="btn btn-primary btnprofilesettingscreate">
-        <button type="button" onclick="appendText()" class="btn btn-warning btnprofilesettingscreate">Add Line</button>
+        <input type="hidden" value="-1" id="maxolds0">
+        <input type="hidden" value="-1" id="max0">
+        <input type="submit" value="Create" class="btn btn-primary btnprofilesettings">
+        <button type="button" onclick="appendText('.$h.')" class="btn btn-warning btnprofilesettings">Add Line</button>
      </form></div>
   ';
   $user = get_current_user();
@@ -75,14 +78,15 @@ function ProfileLister(){
     return;
   }
   else{
-
     $profilemain = explode(PHP_EOL, fread($profiles, filesize("/home/$user/panda/profiles.conf")));
     foreach ($profilemain as $profile) {
       if (substr($profile, 0, 2) == "ID"){
+        $h++;
         echo '<div class="col-sm-4 SettingsDiv">';
         echo "<form action='submit.php' method='post' style='display:inline;'>";
         $id = explode('-', $profile);
         echo '<input type="hidden" value="'.$id[1].'" name="edit">';
+        echo '<input type="hidden" value="'.$h.'" name="profiles">';
       }
       else if (substr($profile, 0, 4) == "NAME"){
         $name = explode('-', $profile);
@@ -97,6 +101,7 @@ function ProfileLister(){
       }
 
       else if (substr($profile, 0, 6) == "CYCLES"){
+          echo '<div id="checkboxrows'.$h.'">';
           $cycles = explode('-', $profile);
           $i = 0;
           foreach ($cycles as $cycle) {
@@ -104,12 +109,12 @@ function ProfileLister(){
             else if(strlen($cycle) > 5){
               $checkboxes = explode(',', $cycle);
               $j = 0;
-              echo '<div class="input-group mb-1">';
+              echo '<div id="checkboxrow'.$i.'" class="input-group mb-1">';
               echo '<div class="input-group-prepend">';
               echo '<div class="input-group-text alt-input-style" >';
               foreach ($checkboxes as $checkbox) {
-                if($checkbox == '1')echo '<input type="checkbox" checked value="1" name="profile'.$i.$j.'" class="profilecheck">&ensp;';
-                else if($checkbox == '0')echo '<input type="checkbox" value="1" name="profile'.$i.$j.'" class="profilecheck">&ensp;';
+                if($checkbox == '1')echo '<input type="checkbox" onchange="appendText('.$h.')" checked value="1" name="profile'.$h.$i.$j.'" class="profilecheck">&ensp;';
+                else if($checkbox == '0')echo '<input type="checkbox" onchange="appendText('.$h.')" value="1" name="profile'.$h.$i.$j.'" class="profilecheck">&ensp;';
                 $j++;
               }
               echo '&ensp;</div></div>';
@@ -122,8 +127,11 @@ function ProfileLister(){
           }
 
           echo '
-          <br>
+          </div><br>
+          <input type="hidden" value="'.($i-1).'" id="maxold'.$h.'">
+          <input type="hidden" value="'.($i-1).'" id="max'.$h.'">
           <input type="submit" value="Change" class="btn btn-primary btnprofilesettings">
+          <button type="button" onclick="appendText('.$h.')" class="btn btn-warning btnprofilesettings">Add Line</button>
           </form><form action="submit.php" method="post" style="display: inline;">
           <input type="hidden" value="'.$id[1].'" name="delete">
           <input type="submit" value="Delete" class="btn btn-danger btnprofilesettings">
