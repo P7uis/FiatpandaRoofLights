@@ -39,14 +39,14 @@ function ProfileLister(){
   <div class="container"><div class="row">
   <div class="col-sm-4 SettingsDiv">
      <form action="submit.php" method="post" style="display:inline;">
-        <input type="hidden" value="17275737505" name="id">
+        <input type="hidden" value="17275737505" name="create">
         <h3>New Profile</h3>
         <div class="input-group mb-1">
-           <input type="text" class="form-control input-style" placeholder="profile name" name="name">
+           <input type="text" required class="form-control input-style" placeholder="profile name" name="name">
            <div class="input-group-append "><span class="input-group-text alt-input-style">profile name</span></div>
         </div>
         <div class="input-group mb-1">
-           <input type="number" class="form-control input-style" min="0.1" max="60" step="0.1" value="1" placeholder="delay">
+           <input type="number" id="alldelay'.$h.'" onchange="DelayChanger('.$h.')"onchange="DelayChanger('.$h.')" required class="form-control input-style" min="0.1" max="60" step="0.1" value="1" placeholder="delay">
            <div class="input-group-append "><span class="input-group-text alt-input-style">change all delays</span></div>
         </div>
         <br>
@@ -61,12 +61,11 @@ function ProfileLister(){
                 <input type="checkbox" onchange="appendText('.$h.')" value="1" name="profile004" class="profilecheck">&ensp;
               </div>
            </div>
-           <input type="number" min="0.1" max="60" step="0.1" name="delay0" value="1" class="form-control  input-style" placeholder="delay">
+           <input type="number"  id="'.$h.'" required min="0.1" max="60" step="0.1" name="delay'.$h.'" value="1" class="form-control  input-style" placeholder="delay">
         </div>
         </div>
         <br>
-        <input type="hidden" value="-1" id="maxolds0">
-        <input type="hidden" value="-1" id="max0">
+        <input type="hidden" value="0" id="max0">
         <input type="submit" value="Create" class="btn btn-primary btnprofilesettings">
         <button type="button" onclick="appendText('.$h.')" class="btn btn-warning btnprofilesettings">Add Line</button>
      </form></div>
@@ -93,10 +92,10 @@ function ProfileLister(){
 
         echo "<h3>Profile: ".$name[1]."</h3>";
         echo '<div class="input-group mb-1">
-              <input type="text" class="form-control input-style" placeholder="profile name" value="'.$name[1].'" name="name">
+              <input type="text" required class="form-control input-style" placeholder="profile name" value="'.$name[1].'" name="name">
               <div class="input-group-append "><span class="input-group-text alt-input-style">profile name</span></div></div>';
         echo '<div class="input-group mb-1">
-              <input type="number" class="form-control input-style" min=0.1 max=60 step=0.1 value="1" placeholder="delay">
+              <input type="number" id="alldelay'.$h.'" onchange="DelayChanger('.$h.')"required class="form-control input-style" min=0.1 max=60 step=0.1 value="1" placeholder="delay">
               <div class="input-group-append "><span class="input-group-text alt-input-style">change all delays</span></div></div><br>';
       }
 
@@ -120,7 +119,7 @@ function ProfileLister(){
               echo '&ensp;</div></div>';
             }
             else{
-                echo '<input type="number" min=0.1 max=60 step=0.1 name="delay'.$i.'" value="'.StringBetween($cycle, '[', ']').'" class="form-control  input-style" placeholder="delay">';
+                echo '<input type="number" id="'.$h.'" required min=0.1 max=60 step=0.1 name="delay'.$i.'" value="'.StringBetween($cycle, '[', ']').'" class="form-control  input-style" placeholder="delay">';
                 $i++;
                 echo "</div>";
             }
@@ -128,7 +127,6 @@ function ProfileLister(){
 
           echo '
           </div><br>
-          <input type="hidden" value="'.($i-1).'" id="maxold'.$h.'">
           <input type="hidden" value="'.($i-1).'" id="max'.$h.'">
           <input type="submit" value="Change" class="btn btn-primary btnprofilesettings">
           <button type="button" onclick="appendText('.$h.')" class="btn btn-warning btnprofilesettings">Add Line</button>
@@ -141,6 +139,7 @@ function ProfileLister(){
           ';
         }
     }
+    echo '<input type="hidden" id="profilemax" value="'.$h.'">';
   }
 
   echo "</div></div>";
@@ -160,8 +159,6 @@ function ProfileEditor($id, $name, $cycles){
     $i = 0;
     $ii = count($profilemain)-1;
     for($i; $i <= $ii; $i++){
-      //TODO random number generator for create function
-      //echo round($salt = uniqid(mt_rand(), true))."<br>";
       if($i < $ii)$eol = PHP_EOL;
       else $eol = NULL;
 
@@ -201,7 +198,11 @@ function ProfileDeleter($id){
   fclose($profilesW);
 }}
 
+function ProfileCreater(){
 
+    //TODO random number generator for create function
+    //echo round($salt = uniqid(mt_rand(), true))."<br>";
+}
 
 function WPAconfRead(){
   $WPAconfR = fopen("/etc/wpa_supplicant/wpa_supplicant-wlan1.conf", "r");
