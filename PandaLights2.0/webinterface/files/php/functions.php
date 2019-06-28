@@ -33,13 +33,45 @@ function ThemeWrite($optionW){
     fclose($themeconfW);
 }
 
+function LightsToggle(){
+  $user = get_current_user();
+  $profiles = fopen("/home/$user/panda/current.enabled.conf", "r");
+  if (filesize("/home/$user/panda/current.enabled.conf") == 0){
+    fclose($profiles);
+    return;
+  }
+  else{
+    $toggle = explode(' ', fread($profiles, filesize("/home/$user/panda/current.enabled.conf")));
+    if($toggle[0] == "True")$toggle = "False";
+    else $toggle = "True";
+  }
+  fclose($profiles);
+  $profilesW = fopen("/home/$user/panda/current.enabled.conf", "w");
+  fwrite($profilesW, $toggle);
+  fclose($profilesW);
+}
+
+function LightsList(){
+  $user = get_current_user();
+  $profiles = fopen("/home/$user/panda/current.enabled.conf", "r");
+  if (filesize("/home/$user/panda/current.enabled.conf") == 0){
+    fclose($profiles);
+    return;
+  }
+  else{
+    $toggle = explode(' ', fread($profiles, filesize("/home/$user/panda/current.enabled.conf")));
+    if($toggle[0] == "True")return "<button class='btn btn-danger'>Toggle Lights Off</button>";
+    else return "<button class='btn btn-success'>Toggle Lights On</button>";
+  }
+}
+
 function ProfileLister(){
   $h = 0;
   echo '
   <div class="container"><div class="row">
   <div class="col-sm-4 SettingsDiv">
      <form action="submit.php" method="post" style="display:inline;">
-        <input type="hidden" value="17275737505" name="create">
+        <input type="hidden" name="create">
         <h3>New Profile</h3>
         <div class="input-group mb-1">
            <input type="text" required class="form-control input-style" placeholder="profile name" name="name">
@@ -105,7 +137,7 @@ function ProfileLister(){
           $i = 0;
           foreach ($cycles as $cycle) {
             if ($cycle == "CYCLES"){}
-            else if(strlen($cycle) > 5){
+            else if(!StringBetween($cycle, '[', ']')){
               $checkboxes = explode(',', $cycle);
               $j = 0;
               echo '<div id="checkboxrow'.$i.'" class="input-group mb-1">';
@@ -135,7 +167,7 @@ function ProfileLister(){
           <input type="submit" value="Delete" class="btn btn-danger btnprofilesettings">
           </form><form action="submit.php" method="post" style="display: inline;">
           <input type="hidden" value="'.$id[1].'" name="enable">
-          <input type="submit" value="Enable" class="btn btn-success btnprofilesettings"></div></form>
+          <input type="submit" value="Set Active Profile" class="btn btn-success btnprofilesettings"></div></form>
           ';
         }
     }
@@ -198,11 +230,51 @@ function ProfileDeleter($id){
   fclose($profilesW);
 }}
 
-function ProfileCreater(){
+function ProfileEnabler($id){
+  $user = get_current_user();
+  $profilesR = fopen("/home/$user/panda/profiles.conf", "r");
+  if (filesize("/home/$user/panda/profiles.conf") == 0){
+    fclose($profilesR);
+    return;
+  }
+  else{
+    $profilemain = explode(PHP_EOL, fread($profilesR, filesize("/home/$user/panda/profiles.conf")));
+    $profilesnew = "";
+    $i = 0;
+    $ii = count($profilemain);
+    for($i; $i < $ii; $i++){
+      if($profilemain[$i] == $id){$profilesnew = $profilesnew.$profilemain[$i].PHP_EOL;}
+      else if($i > 0 && $profilemain[$i-1] == $id){$profilesnew = $profilesnew.$profilemain[$i].PHP_EOL;}
+      else if($i > 1 && $profilemain[$i-2] == $id){$profilesnew = $profilesnew.$profilemain[$i];}
+  }
+  fclose($profilesR);
+  $profilesW = fopen("/home/$user/panda/current.profile.conf", "w");
+  fwrite($profilesW, $profilesnew);
+  fclose($profilesW);
+}}
 
-    //TODO random number generator for create function
-    //echo round($salt = uniqid(mt_rand(), true))."<br>";
-}
+function ProfileCreater($id, $name, $cycles){
+
+  $user = get_current_user();
+  $profilesR = fopen("/home/$user/panda/profiles.conf", "r");
+  if (filesize("/home/$user/panda/profiles.conf") == 0){
+    fclose($profilesR);
+    return;
+  }
+  else{
+    $profilemain = explode(PHP_EOL, fread($profilesR, filesize("/home/$user/panda/profiles.conf")));
+    $profilesnew = "";
+    $i = 0;
+    $ii = count($profilemain)-1;
+    for($i; $i <= $ii; $i++)$profilesnew = $profilesnew.$profilemain[$i].PHP_EOL;
+    $profilesnew = $profilesnew.$id.PHP_EOL;
+    $profilesnew = $profilesnew.$name.PHP_EOL;
+    $profilesnew = $profilesnew.$cycles;
+  fclose($profilesR);
+  $profilesW = fopen("/home/$user/panda/profiles.conf", "w");
+  fwrite($profilesW, $profilesnew);
+  fclose($profilesW);
+  }}
 
 function WPAconfRead(){
   $WPAconfR = fopen("/etc/wpa_supplicant/wpa_supplicant-wlan1.conf", "r");
@@ -267,7 +339,7 @@ function WPAconfDelete($ssid, $psk){
 function StringBetween($string, $start, $end){
     $string = ' ' . $string;
     $ini = strpos($string, $start);
-    if ($ini == 0) return '';
+    if ($ini == 0) return false;
     $ini += strlen($start);
     $len = strpos($string, $end, $ini) - $ini;
     return substr($string, $ini, $len);

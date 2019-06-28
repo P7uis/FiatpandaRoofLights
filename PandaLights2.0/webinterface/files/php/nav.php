@@ -33,6 +33,9 @@
       <li class="nav-item <?php echo $a_settings; ?>">
         <a class="nav-link" href="/settings">Settings</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/toggle/index.php?page=<?php echo $page; ?>"><?php echo LightsList(); ?></a>
+      </li>
     </ul>
   </div>
 </nav>
