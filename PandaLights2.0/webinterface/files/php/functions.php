@@ -62,6 +62,7 @@ function LightsList(){
     $toggle = explode(' ', fread($profiles, filesize("/home/$user/panda/current.enabled.conf")));
     if($toggle[0] == "True")return "<button class='btn btn-danger'>Toggle Lights Off</button>";
     else return "<button class='btn btn-success'>Toggle Lights On</button>";
+    fclose($profiles);
   }
 }
 
@@ -167,7 +168,7 @@ function ProfileLister(){
           <input type="submit" value="Delete" class="btn btn-danger btnprofilesettings">
           </form><form action="submit.php" method="post" style="display: inline;">
           <input type="hidden" value="'.$id[1].'" name="enable">
-          <input type="submit" value="Set Active Profile" class="btn btn-success btnprofilesettings"></div></form>
+          <input type="submit" value="Enable" class="btn btn-success btnprofilesettings"></div></form>
           ';
         }
     }
@@ -175,6 +176,41 @@ function ProfileLister(){
   }
 
   echo "</div></div>";
+  fclose($profiles);
+}
+
+function ProfileSwiper(){
+  $user = get_current_user();
+  $profiles = fopen("/home/$user/panda/profiles.conf", "r");
+  if (filesize("/home/$user/panda/profiles.conf") == 0){
+    fclose($profiles);
+    return;
+  }
+  else{
+    $profilemain = explode(PHP_EOL, fread($profiles, filesize("/home/$user/panda/profiles.conf")));
+    foreach ($profilemain as $profile) {
+      if (substr($profile, 0, 2) == "ID"){
+        echo '<div class="swiper-slide">
+        <form onsubmit="FormNotify()" target="transFrame" action="submit.php" method="post">
+        <iframe style="display: none;" name="transFrame" id="transFrame"></iframe>';
+        $id = explode('-', $profile);
+        $id = $id[1];
+        echo '<input type="hidden" value="'.$id.'" name="enable">';
+      }
+      else if (substr($profile, 0, 4) == "NAME"){
+      $name = explode('-', $profile);
+      $name = $name[1];
+        echo '
+          <h3>'.$name.'</h3><br><br>
+
+          <input type="submit" value="Enable" class="btn btn-success btnprofilesettings">
+          </form>
+        </div>
+        ';
+      }
+      }
+
+    }
   fclose($profiles);
 }
 
@@ -250,6 +286,10 @@ function ProfileEnabler($id){
   fclose($profilesR);
   $profilesW = fopen("/home/$user/panda/current.profile.conf", "w");
   fwrite($profilesW, $profilesnew);
+  fclose($profilesW);
+  $toggle = "True";
+  $profilesW = fopen("/home/$user/panda/current.enabled.conf", "w");
+  fwrite($profilesW, $toggle);
   fclose($profilesW);
 }}
 
