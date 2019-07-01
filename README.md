@@ -1,5 +1,3 @@
-!!!!!!! Unfortunately This project is on hold because my car is broken. I will continue when I am done turning my old fiat panda into a panda pick-up. !!!!!!!
-
 # FiatpandaRoofLights
 I am building controlable lights on my fiat panda roof. I use a small mqtt script on some esp8266 01s with relay modules.
 
