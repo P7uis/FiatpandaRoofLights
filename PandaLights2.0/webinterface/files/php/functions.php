@@ -79,7 +79,7 @@ function ProfileLister(){
            <div class="input-group-append "><span class="input-group-text alt-input-style">profile name</span></div>
         </div>
         <div class="input-group mb-1">
-           <input type="number" id="alldelay'.$h.'" onchange="DelayChanger('.$h.')"onchange="DelayChanger('.$h.')" required class="form-control input-style" min="0.1" max="60" step="0.1" value="1" placeholder="delay">
+           <input type="number" id="alldelay'.$h.'" onchange="DelayChanger('.$h.')"onchange="DelayChanger('.$h.')" required class="form-control input-style" min="0.1" max="60" step="0.05" value="1" placeholder="delay">
            <div class="input-group-append "><span class="input-group-text alt-input-style">change all delays</span></div>
         </div>
         <br>
@@ -94,7 +94,7 @@ function ProfileLister(){
                 <input type="checkbox" onchange="appendText('.$h.')" value="1" name="profile004" class="profilecheck">&ensp;
               </div>
            </div>
-           <input type="number"  id="'.$h.'" required min="0.1" max="60" step="0.1" name="delay'.$h.'" value="1" class="form-control  input-style" placeholder="delay">
+           <input type="number"  id="'.$h.'" required min="0.1" max="60" step="0.05" name="delay'.$h.'" value="1" class="form-control  input-style" placeholder="delay">
         </div>
         </div>
         <br>
@@ -128,7 +128,7 @@ function ProfileLister(){
               <input type="text" required class="form-control input-style" placeholder="profile name" value="'.$name[1].'" name="name">
               <div class="input-group-append "><span class="input-group-text alt-input-style">profile name</span></div></div>';
         echo '<div class="input-group mb-1">
-              <input type="number" id="alldelay'.$h.'" onchange="DelayChanger('.$h.')"required class="form-control input-style" min=0.1 max=60 step=0.1 value="1" placeholder="delay">
+              <input type="number" id="alldelay'.$h.'" onchange="DelayChanger('.$h.')"required class="form-control input-style" min=0.1 max=60 step=0.05 value="1" placeholder="delay">
               <div class="input-group-append "><span class="input-group-text alt-input-style">change all delays</span></div></div><br>';
       }
 
@@ -152,7 +152,7 @@ function ProfileLister(){
               echo '&ensp;</div></div>';
             }
             else{
-                echo '<input type="number" id="'.$h.'" required min=0.1 max=60 step=0.1 name="delay'.$i.'" value="'.StringBetween($cycle, '[', ']').'" class="form-control  input-style" placeholder="delay">';
+                echo '<input type="number" id="'.$h.'" required min=0.1 max=60 step=0.05 name="delay'.$i.'" value="'.StringBetween($cycle, '[', ']').'" class="form-control  input-style" placeholder="delay">';
                 $i++;
                 echo "</div>";
             }
@@ -187,10 +187,31 @@ function ProfileSwiper(){
     return;
   }
   else{
+    echo '
+
+    <div class="carousel-cell">
+    <form target="transFrame" action="manoverride.php" id="manoverride" method="post">
+    <iframe style="display: none;" name="transFrame" id="transFrame"></iframe>
+      <h3>Manual Override</h3>
+      <input type="hidden" name="manoverride">
+      <input type="checkbox" class="profilecheck" value="1" name="Light1" id="Light1">
+      <input type="checkbox" class="profilecheck" value="1" name="Light2" id="Light2">
+      <input type="checkbox" class="profilecheck" value="1" name="Light3" id="Light3">
+      <input type="checkbox" class="profilecheck" value="1" name="Light4" id="Light4">
+      <input type="checkbox" class="profilecheck" value="1" name="Light5" id="Light5">
+      <br>
+      <input type="submit" value="Override" class="btn btn-success widebtn"><br>
+      <input type="button" onclick="ManToggle(1,0,0,0,1)" value="Enable 2 and override" class="btn btn-primary widebtn"><br>
+      <input type="button" onclick="ManToggle(1,1,0,1,1)" value="Enable 4 and override" class="btn btn-primary widebtn"><br>
+      <input type="button" onclick="ManToggle(1,1,1,1,1)" value="Enable all and override" class="btn btn-warning widebtn"><br>
+      <input type="button" onclick="ManToggle(0,0,0,0,0)" value="Disable all and override" class="btn btn-danger widebtn">
+      </form>
+    </div>
+    ';
     $profilemain = explode(PHP_EOL, fread($profiles, filesize("/home/$user/panda/profiles.conf")));
     foreach ($profilemain as $profile) {
       if (substr($profile, 0, 2) == "ID"){
-        echo '<div class="swiper-slide">
+        echo '<div class="carousel-cell">
         <form onsubmit="FormNotify()" target="transFrame" action="submit.php" method="post">
         <iframe style="display: none;" name="transFrame" id="transFrame"></iframe>';
         $id = explode('-', $profile);
@@ -203,7 +224,7 @@ function ProfileSwiper(){
         echo '
           <h3>'.$name.'</h3><br><br>
 
-          <input type="submit" value="Enable" class="btn btn-success btnprofilesettings">
+          <input type="submit" value="Enable" class="btn btn-success btnswiper">
           </form>
         </div>
         ';

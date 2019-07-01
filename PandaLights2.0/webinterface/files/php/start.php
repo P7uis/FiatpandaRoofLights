@@ -9,3 +9,4 @@ if($start[0])include("$docroot/files/php/functions.php");
 if($start[1])include("$docroot/files/php/head.php");
 if($start[2])include("$docroot/files/php/nav.php");
 }
+?>

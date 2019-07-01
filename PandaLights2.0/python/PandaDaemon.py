@@ -8,14 +8,14 @@ def on_connect(client, userdata, flags, rc):
 
     if rc == 0:
 
-        print("Connected to broker")
+        connection = "Connected to broker"
 
         global Connected
         Connected = True
 
     else:
 
-        print("Connection failed")
+        connection = "Connection failed"
 
 
 Connected = False
@@ -24,6 +24,8 @@ broker_address = "10.0.0.1"
 port = 1883
 user = "yourUser"
 password = "yourPassword"
+
+shutdowntoggle = False
 
 client = mqttClient.Client("Python")
 client.username_pw_set(user, password=password)
@@ -45,6 +47,7 @@ try:
         with open('/home/pi/panda/current.enabled.conf', 'r') as enabled:
             for enable in enabled:
                 if "True" in enable:
+                    shutdowntoggle = False
                     with open('/home/pi/panda/current.profile.conf', 'r') as output:
                         for line in output:
                             if "ID" in line:
@@ -76,6 +79,16 @@ try:
                                             client.publish("PandaLights", cycle)
                                         i += 1
                 else:
+
+                    if shutdowntoggle == False:
+                        for i in range(5):
+                            os.system("clear")
+                            cycle = "0,0,0,0,0"
+                            print("turning off lights attempt ", i)
+                            print("array:  " + cycle)
+                            client.publish("PandaLights", cycle)
+                            #time.sleep(1)
+                        shutdowntoggle = True
                     os.system("clear")
                     print("Lights: disabled")
                     time.sleep(2)

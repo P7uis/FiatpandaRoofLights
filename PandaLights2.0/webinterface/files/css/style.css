@@ -32,8 +32,7 @@ body{
     padding: 3%;
   }
 }
-=
-@media only screen and (max-width: 600px){
+
   .profilecheck{
     /* Double-sized Checkboxes */
     -ms-transform: scale(2); /* IE */
@@ -42,8 +41,8 @@ body{
     -o-transform: scale(2); /* Opera */
     transform: scale(2);
     padding: 10px;
+    margin-right: 3%;
   }
-}
 .btnprofilesettings{
   width: 49% !important;
   margin: 0% !important;
@@ -53,7 +52,7 @@ body{
 }
 .swiper-container {
  width: 100%;
- height: 60%;
+ height: fit-content !important;
 }
 .swiper-slide {
  text-align: center;
@@ -62,4 +61,89 @@ body{
  padding: 1%;
  overflow-x: hidden;
  overflow-y: auto;
+}
+.widebtn{
+  width: 100% !important;
+  margin-top: 2% !important;
+}
+
+	.logo {
+		display: none;
+	}
+	.logo2 {
+		height: 100px;
+		width: 100px;
+	}
+	.carousel {
+		background-color: ;
+	}
+	.carousel-cell {
+		width: 350px;
+		height: 350px;
+		margin-right: 40px;
+		border-radius: 5px;
+		counter-increment: gallery-cell;
+		top: 50%;
+		transform: translateY(-50%);
+     text-align: center;
+     font-size: 18px;
+     border-radius: 15px;
+     padding: 1%;
+     overflow-x: hidden;
+     overflow-y: auto;
+	}
+
+  @media only screen and (max-width: 600px){
+    .carousel-cell {
+       padding: 7%;
+  	}
+  }
+
+	.flickity-slider {
+		position: fixed;
+		height: 100%;
+		width: 100%;
+	}
+	.static-banner {
+		position: fixed;
+		background: hsla(0, 0%, 0%, 0.3);
+		z-index: 1;
+		padding: 2px 20px;
+		font-size: 26px;
+		color: white;
+		pointer-events: none;
+		left: 10px;
+		top: 10px;
+	}
+	.bannerimage {
+		height: 100%;
+		width: 100%;
+	}
+	.banner {
+		position: absolute;
+		z-index: 1;
+		font-size: 30px;
+		top: 25%;
+		left: 20%;
+		right: 20%;
+		text-align: center;
+	}
+	.flickity-prev-next-button {
+		position: fixed;
+		top: 50%;
+		width: 44px;
+		height: 44px;
+		border: none;
+		border-radius: 50%;
+		background: white;
+		background: hsla(0, 0%, 100%, 0.75);
+		cursor: pointer;
+		/* vertically center */
+		-webkit-transform: translateY(-50%);
+		transform: translateY(-50%);
+	}
+
+.btnswiper{
+  width: 50%;
+  height: 50%;
 }

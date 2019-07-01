@@ -8,34 +8,32 @@
   include("$docroot/files/php/start.php");
  ?>
  <div class="content">
-   <a class="nav-link" href="/toggle/index.php?page=<?php echo $page; ?>"><?php echo LightsList();?></a><br>
 
-   <div class="swiper-container">
-    <div class="swiper-wrapper">
-      <?php ProfileSwiper() ?>
+     <div class="carousel"data-flickity='{ "wrapAround": true, "pageDots": false }'>
+       <?php ProfileSwiper() ?>
     </div>
-    <!-- Add Pagination -->
-    <div class="swiper-pagination"></div>
-</div>
 
  </div>
 <script>
-var x = window.matchMedia("(max-width: 600px)")
-if (x.matches) {var slidecount = 1  }
-else { slidecount = 3 }
-var swiper = new Swiper('.swiper-container', {
-  slidesPerView: slidecount,
-      spaceBetween: 30,
-      slidesPerGroup: 1,
-      loop: true,
-      loopFillGroupWithBlank: true,
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      },
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-    });
+
+
+    function ManToggle(l1, l2, l3, l4, l5){
+      if(l1 == 1)$( "#Light1" ).prop( "checked", true );
+      else       $( "#Light1" ).prop( "checked", false );
+
+      if(l2 == 1)$( "#Light2" ).prop( "checked", true );
+      else       $( "#Light2" ).prop( "checked", false );
+
+      if(l3 == 1)$( "#Light3" ).prop( "checked", true );
+      else       $( "#Light3" ).prop( "checked", false );
+
+      if(l4 == 1)$( "#Light4" ).prop( "checked", true );
+      else       $( "#Light4" ).prop( "checked", false );
+
+      if(l5 == 1)$( "#Light5" ).prop( "checked", true );
+      else       $( "#Light5" ).prop( "checked", false );
+
+      $( "#manoverride" ).submit();
+    }
+
 </script>

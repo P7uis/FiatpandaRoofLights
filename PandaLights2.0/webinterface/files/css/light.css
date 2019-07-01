@@ -1,6 +1,6 @@
 .SettingsDiv{
   background-color: #f8f9fa;
 }
-.swiper-slide {
-  background-color: #f8f9fa;
+.carousel-cell {
+  background-color: #f8f9fa !important;
 }
