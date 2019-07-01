@@ -3,11 +3,11 @@ int Relay = 0;
 #include <PubSubClient.h>
 WiFiClient espClient;
 PubSubClient client(espClient);
-const char* ssid = "GelePanda4x2";
-const char* password = "abcdefgh";
-const char* mqtt_server = "192.168.1.2";
-const char* outTopic = "Ready"; //define outgoing topic
-const char* inTopic = "L3I"; //define incoming topic
+const char* ssid = "xxxxxxxx";      //replace "xxxxxxxx" with your wifi SSID
+const char* password = "yyyyyyyy";  //replace "yyyyyyyy" with your Wifi password
+const char* mqtt_server = "xxx.xxx.xxx.xxx";  //replace "xxx.xxx.xxx.xxx" with your broker IP
+const char* outTopic = "Ready"; //define esp mqtt outgoing topic
+const char* inTopic = "Lights"; //define esp mqtt incoming topic
 
 void setup_wifi() {
 
@@ -40,12 +40,13 @@ void callback(char* inTopic, byte* payload, unsigned int length) {
     Serial.print((char)payload[i]);
   }
   Serial.println();
-
-  if ((char)payload[0] == '0') {
-     digitalWrite(Relay, HIGH);
-  } 
-  else if ((char)payload[0] == '1') {
+  //Check if second index is true
+  //NOTE on this relay, LOW is on and HIGH is off
+  if ((char)payload[0] == '1') {        //edit the number in "payload[0]" to change the checked position of the array 
     digitalWrite(Relay, LOW);
+  } 
+  else {
+    digitalWrite(Relay, HIGH);
   }
 }
 
