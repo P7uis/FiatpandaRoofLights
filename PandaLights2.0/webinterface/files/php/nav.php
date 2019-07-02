@@ -31,9 +31,16 @@
       <li class="nav-item <?php echo $a_settings; ?>">
         <a class="nav-link" href="/settings">Settings</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link active"><?php SSIDcheck(); ?></a>
+      <li class="nav-item" id="WifiStatus">
+
       </li>
     </ul>
   </div>
 </nav>
+<script>
+function fn60sec() {
+    $( "#WifiStatus" ).load( "/jqueryloadwifi.php" );
+}
+fn60sec();
+setInterval(fn60sec, 60*1000);
+</script>
