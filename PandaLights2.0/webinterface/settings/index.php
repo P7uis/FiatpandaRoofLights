@@ -24,6 +24,12 @@
 
              <div class="col-sm-7 SettingsDiv">
                 <h3>WPA Config</h3>
+                  <br><div class="WPADiv">
+                    <form action="submit.php" method="post">
+                      <input type="text" class="form-control input-style" name="wpa-ssid-c" placeholder="wpa-ssid"><br>
+                      <input type="password" class="form-control input-style" name="wpa-psk-c" placeholder="wpa-psk"><br>
+                      <input type="submit" value="Create" class="btn btn-primary">
+                      </form>
                   <?php
                     $ssid = False;
                     $psk = False;
@@ -33,13 +39,13 @@
                       if (strpos($wpaconf, 'ssid')){
                         echo '<br><div class="WPADiv">';
                         echo '<form action="submit.php" method="post">';
-                        echo '<input type="text" value="'.StringBetween($wpaconf, '"', '"').'" class="form-control input-style" name="wpa-ssid"><br>';
+                        echo '<input type="text" value="'.StringBetween($wpaconf, '"', '"').'" class="form-control input-style" name="wpa-ssid" placeholder="wpa-ssid"><br>';
                         echo '<input type="hidden" value="'.StringBetween($wpaconf, '"', '"').'" name="wpa-ssid-old">';
                         $ssidold = StringBetween($wpaconf, '"', '"');
                       }
                       else if (strpos($wpaconf, 'psk')){
                         echo '<input type="hidden" value="'.StringBetween($wpaconf, '"', '"').'" name="wpa-psk-old">';
-                        echo '<input type="password" value="'.StringBetween($wpaconf, '"', '"').'" class="form-control input-style" name="wpa-psk"><br>';
+                        echo '<input type="password" value="'.StringBetween($wpaconf, '"', '"').'" class="form-control input-style" name="wpa-psk" placeholder="wpa-psk"><br>';
                         echo '<input type="submit" value="Change" class="btn btn-primary"> ';
                         $pskold = StringBetween($wpaconf, '"', '"');
                         echo '</form>';

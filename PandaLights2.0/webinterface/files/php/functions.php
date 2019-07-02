@@ -378,6 +378,22 @@ function WPAconfWrite($ssid, $ssidold, $psk, $pskold){
 
 }
 
+function WPAconfAdd($ssid, $psk){
+  $wpaconfnew = "";
+  $wpaconflist = explode(PHP_EOL, WPAconfRead());
+  foreach ($wpaconflist as $wpaconf){
+      $wpaconfnew = $wpaconfnew.$wpaconf.PHP_EOL;
+  }
+  $wpaconfnew = $wpaconfnew."network={".PHP_EOL;
+  $wpaconfnew = $wpaconfnew."\tssid=\"$ssid\"".PHP_EOL;
+  $wpaconfnew = $wpaconfnew."\tpsk=\"$psk\"".PHP_EOL;
+  $wpaconfnew = $wpaconfnew."}".PHP_EOL;
+  $WPAconfW = fopen("/etc/wpa_supplicant/wpa_supplicant-wlan1.conf", "w");
+  fwrite($WPAconfW, $wpaconfnew);
+  fclose($WPAconfW);
+
+}
+
 function WPAconfDelete($ssid, $psk){
   $wpaconfnew = "";
   $wpaconflist = explode(PHP_EOL, WPAconfRead());
