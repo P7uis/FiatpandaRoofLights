@@ -48,5 +48,5 @@ function DelayChanger(profile) {
   var lastrow = parseInt($('#max' + profile).val())
   delay = $('#alldelay' + profile).val();
   console.log(delay);
-  $('input[name=' + profile + ']').val(delay);
+  $('.delay' + profile).val(delay);
 }

@@ -29,6 +29,7 @@
                       <input type="text" class="form-control input-style" name="wpa-ssid-c" placeholder="wpa-ssid"><br>
                       <input type="password" class="form-control input-style" name="wpa-psk-c" placeholder="wpa-psk"><br>
                       <input type="submit" value="Create" class="btn btn-primary">
+                      <a href="/files/wpa_supplicant-wlan1.conf" download><input type="button" class="btn btn-primary" value="Download WPA Supplicant"></a>
                       </form>
                   <?php
                     $ssid = False;
