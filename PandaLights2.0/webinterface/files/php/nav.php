@@ -31,6 +31,9 @@
       <li class="nav-item <?php echo $a_settings; ?>">
         <a class="nav-link" href="/settings">Settings</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link active"><?php SSIDcheck(); ?></a>
+      </li>
     </ul>
   </div>
 </nav>

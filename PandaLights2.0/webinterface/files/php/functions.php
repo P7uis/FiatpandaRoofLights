@@ -1,4 +1,15 @@
 <?php
+function SSIDcheck(){
+  $ssid = shell_exec('iwgetid -r');
+  $percent = shell_exec('/home/pi/getwifiquality.py');
+  $strenght = str_replace('%', '', $percent);
+
+  if($strenght > 0 && $strenght <= 33)echo '<img src="/files/img/wifi1.png" width="20" height="20"> '.$ssid;
+  else if($strenght > 33 && $strenght <= 66)echo '<img src="/files/img/wifi2.png" width="20" height="20"> '.$ssid;
+  else if($strenght > 66)echo '<img src="/files/img/wifi3.png" width="20" height="20"> '.$ssid;
+  else echo '<img src="/files/img/wifi0.png" width="20" height="20"> Not connected';
+
+}
 function ThemeCheck(){
   $user = get_current_user();
   $themeconfR = fopen("/home/$user/panda/theme.conf", "r");
