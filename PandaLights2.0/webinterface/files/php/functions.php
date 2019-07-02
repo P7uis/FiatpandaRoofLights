@@ -105,7 +105,7 @@ function ProfileLister(){
                 <input type="checkbox" onchange="appendText('.$h.')" value="1" name="profile004" class="profilecheck">&ensp;
               </div>
            </div>
-           <input type="number"  id="'.$h.'" required min="0.1" max="60" step="0.05" name="delay'.$h.'" value="1" class="form-control  input-style" placeholder="delay">
+           <input type="number"  name="'.$h.'" required min="0.1" max="60" step="0.05" name="delay'.$h.'" value="1" class="form-control  input-style" placeholder="delay">
         </div>
         </div>
         <br>
@@ -163,7 +163,7 @@ function ProfileLister(){
               echo '&ensp;</div></div>';
             }
             else{
-                echo '<input type="number" id="'.$h.'" required min=0.1 max=60 step=0.05 name="delay'.$i.'" value="'.StringBetween($cycle, '[', ']').'" class="form-control  input-style" placeholder="delay">';
+                echo '<input type="number" name="'.$h.'" required min=0.1 max=60 step=0.05 name="delay'.$i.'" value="'.StringBetween($cycle, '[', ']').'" class="form-control  input-style" placeholder="delay">';
                 $i++;
                 echo "</div>";
             }
