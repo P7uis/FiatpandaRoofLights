@@ -112,6 +112,7 @@ function ProfileLister(){
         <input type="hidden" value="0" id="max0">
         <input type="submit" value="Create" class="btn btn-primary btnprofilesettings">
         <button type="button" onclick="appendText('.$h.')" class="btn btn-warning btnprofilesettings">Add Line</button>
+        <a href="/files/profiles.conf" download="PandaLightProfiles'.date('YmdHi').'"><input type="button" class="btn btn-info widebtn" value="Download Light Profiles"></a>
      </form></div>
   ';
   $user = get_current_user();
