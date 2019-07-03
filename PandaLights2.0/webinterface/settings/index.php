@@ -15,6 +15,8 @@
  <div class="modal fade" id="WPAupload" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
  <div class="modal-dialog modal-dialog-centered" role="document">
  <form action="submit.php" method="post" enctype="multipart/form-data" id="upload_form">
+   <form  action="manoverride.php" id="manoverride" method="post" class="swipeform">
+   <iframe style="display: none;" name="transFrame" id="transFrame"></iframe>
  <div class="modal-content ModalStyle">
   <div class="modal-header">
     <h5 class="modal-title" id="exampleModalLongTitle">Upload WPA Config</h5>
@@ -41,5 +43,18 @@
  </div>
  </div>
 <script>
+$('.swipeform').submit(function(e) {
+e.preventDefault();
+this.submit();
+  setTimeout( function () {
+     refreshLight()
+ }, 300);
+ setTimeout( function () {
+    refreshLight()
+}, 300);
+setTimeout( function () {
+   refreshLight()
+}, 300);
+});
 $("#content").load("get.php");
 </script>

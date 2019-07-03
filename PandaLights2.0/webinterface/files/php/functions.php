@@ -71,8 +71,8 @@ function LightsList(){
   }
   else{
     $toggle = explode(' ', fread($profiles, filesize("/home/$user/panda/current.enabled.conf")));
-    if($toggle[0] == "True")return "<button class='btn btn-danger'>Toggle Lights Off</button>";
-    else return "<button class='btn btn-success'>Toggle Lights On</button>";
+    if($toggle[0] == "True")return "<button type='submit' class='btn btn-danger'>Toggle Lights Off</button>";
+    else return "<button type='submit' class='btn btn-success'>Toggle Lights On</button>";
     fclose($profiles);
   }
 }
@@ -180,9 +180,25 @@ function ProfileLister(){
           </form><form action="submit.php" method="post" style="display: inline;">
           <input type="hidden" value="'.$id[1].'" name="delete">
           <input type="submit" value="Delete" class="btn btn-danger btnprofilesettings">
-          </form><form action="submit.php" method="post" style="display: inline;">
+          </form><form action="submit.php" method="post" style="display: inline;" class="swipeform" target="transFrame">
+          <iframe style="display: none;" name="transFrame" id="transFrame"></iframe>
           <input type="hidden" value="'.$id[1].'" name="enable">
           <input type="submit" value="Enable" class="btn btn-success btnprofilesettings"></div></form>
+          <script>
+          $(\'.swipeform\').submit(function(e) {
+          e.preventDefault();
+          this.submit();
+            setTimeout( function () {
+               refreshLight()
+           }, 300);
+           setTimeout( function () {
+              refreshLight()
+          }, 300);
+          setTimeout( function () {
+             refreshLight()
+          }, 300);
+          });
+          </script>
           ';
         }
     }
@@ -204,7 +220,7 @@ function ProfileSwiper(){
     echo '
 
     <div class="carousel-cell">
-    <form target="transFrame" action="manoverride.php" id="manoverride" method="post">
+    <form target="transFrame" action="manoverride.php" id="manoverride" method="post" class="swipeform">
     <iframe style="display: none;" name="transFrame" id="transFrame"></iframe>
       <h3>Manual Override</h3>
       <input type="hidden" name="manoverride">
@@ -226,7 +242,7 @@ function ProfileSwiper(){
     foreach ($profilemain as $profile) {
       if (substr($profile, 0, 2) == "ID"){
         echo '<div class="carousel-cell">
-        <form onsubmit="FormNotify()" target="transFrame" action="submit.php" method="post">
+        <form target="transFrame" action="submit.php" method="post" class="swipeform">
         <iframe style="display: none;" name="transFrame" id="transFrame"></iframe>';
         $id = explode('-', $profile);
         $id = $id[1];

@@ -41,7 +41,8 @@
 
                     if (strpos($wpaconf, 'ssid')){
                       echo '<br><div class="WPADiv">';
-                      echo '<form action="submit.php" method="post">';
+                      echo '<form target="transFrame" action="submit.php" method="post">';
+                      echo '<iframe style="display: none;" name="transFrame" id="transFrame"></iframe>';
                       echo '<input type="text" value="'.StringBetween($wpaconf, '"', '"').'" class="form-control input-style" name="wpa-ssid" placeholder="wpa-ssid"><br>';
                       echo '<input type="hidden" value="'.StringBetween($wpaconf, '"', '"').'" name="wpa-ssid-old">';
                       $ssidold = StringBetween($wpaconf, '"', '"');

@@ -36,4 +36,17 @@
       $( "#manoverride" ).submit();
     }
 
+    $('.swipeform').submit(function(e) {
+    e.preventDefault();
+    this.submit();
+      setTimeout( function () {
+         refreshLight()
+     }, 300);
+     setTimeout( function () {
+        refreshLight()
+    }, 300);
+    setTimeout( function () {
+       refreshLight()
+   }, 300);
+    });
 </script>

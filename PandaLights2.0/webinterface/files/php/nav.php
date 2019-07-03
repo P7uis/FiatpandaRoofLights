@@ -1,6 +1,13 @@
 <nav class="navbar navbar-expand-lg navbar-<?php echo ThemeCheck(); ?> bg-<?php echo ThemeCheck(); ?> nav-style">
   <a class="navbar-brand" href="/">
-    <img src="/files/img/panda.png" width="30" height="30" class="d-inline-block align-top" alt=""><a href="/toggle/index.php?page=<?php echo $page; ?>"><?php echo LightsList(); ?></a></a>
+    <img src="/files/img/panda.png" width="30" height="30" class="d-inline-block align-top" alt="">
+    <form target="transFrame" action="/toggle/index.php" id="lightbtnform" method="post" class="swipeform" style="display: inline;">
+    <iframe style="display: none;" name="transFrame" id="transFrame"></iframe>
+    <a id="lightbtnnav">
+    <?php echo LightsList(); ?>
+  </a>
+  </form>
+  </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
