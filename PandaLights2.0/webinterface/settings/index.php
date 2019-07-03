@@ -7,61 +7,39 @@
   //include start file which in turn includes functions, head and nav file
   include("$docroot/files/php/start.php");
  ?>
- <div class="content">
-   <div class="container">
-            <div class="row">
-                    <div class="col-sm SettingsDiv">
-                       <h3>Theme (<?php echo ThemeCheck(); ?>)</h3>
-                       <form action="submit.php" method="post"><br>
-                         <input type="hidden" value="<?php echo ThemeCheck(); ?>" name="theme">
-                         <input type="submit" value="Toggle Theme" class="btn btn-primary">
-                       </form>
 
-                    </div>
+ <div class="content" id="content">
 
-
-
-
-             <div class="col-sm-7 SettingsDiv">
-                <h3>WPA Config</h3>
-                  <br><div class="WPADiv">
-                    <form action="submit.php" method="post">
-                      <input type="text" class="form-control input-style" name="wpa-ssid-c" placeholder="wpa-ssid"><br>
-                      <input type="password" class="form-control input-style" name="wpa-psk-c" placeholder="wpa-psk"><br>
-                      <input type="submit" value="Create" class="btn btn-primary">
-                      <a href="/files/wpa_supplicant-wlan1.conf" download="<?php echo "PandaWPAsupplicant".date('YmdHi');?>"><input type="button" class="btn btn-info" value="Download WPA Supplicant"></a>
-                      </form>
-                  <?php
-                    $ssid = False;
-                    $psk = False;
-                    $wpaconflist = explode(PHP_EOL, WPAconfRead());
-                    foreach ($wpaconflist as $wpaconf) {
-
-                      if (strpos($wpaconf, 'ssid')){
-                        echo '<br><div class="WPADiv">';
-                        echo '<form action="submit.php" method="post">';
-                        echo '<input type="text" value="'.StringBetween($wpaconf, '"', '"').'" class="form-control input-style" name="wpa-ssid" placeholder="wpa-ssid"><br>';
-                        echo '<input type="hidden" value="'.StringBetween($wpaconf, '"', '"').'" name="wpa-ssid-old">';
-                        $ssidold = StringBetween($wpaconf, '"', '"');
-                      }
-                      else if (strpos($wpaconf, 'psk')){
-                        echo '<input type="hidden" value="'.StringBetween($wpaconf, '"', '"').'" name="wpa-psk-old">';
-                        echo '<input type="password" value="'.StringBetween($wpaconf, '"', '"').'" class="form-control input-style" name="wpa-psk" placeholder="wpa-psk"><br>';
-                        echo '<input type="submit" value="Change" class="btn btn-primary"> ';
-                        $pskold = StringBetween($wpaconf, '"', '"');
-                        echo '</form>';
-                        echo '<form action="submit.php" method="post">';
-                        echo '<input type="submit" value="Delete" class="btn btn-danger">';
-                        echo '<input type="hidden" value="'.$ssidold.'" name="wpa-ssid-del">';
-                        echo '<input type="hidden" value="'.$pskold.'" name="wpa-psk-del">';
-                        echo '</form>';
-                        echo '</div>';
-                      }
-                    }
-                ?>
-                </form>
-             </div>
-           </div>
-
-         </div>
  </div>
+ <!-- Modal -->
+ <div class="modal fade" id="WPAupload" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+ <div class="modal-dialog modal-dialog-centered" role="document">
+ <form action="submit.php" method="post" enctype="multipart/form-data" id="upload_form">
+ <div class="modal-content ModalStyle">
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLongTitle">Upload WPA Config</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+   <progress id="progressBar" value="0" max="100" style="width:100%;"></progress><br><br>
+    <div class="input-group mb-3">
+ <div class="custom-file">
+ <input required type="file" class="custom-file-input input-style" name="wpaconf" id="wpaconf">
+ <label class="custom-file-label alt-input-style" for="wpaconf">Choose file</label>
+ </div>
+ </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <input type="button" class="btn btn-primary" value="Upload" onclick="uploadFile('wpaconf')">
+
+  </div>
+ </div>
+ </form>
+ </div>
+ </div>
+<script>
+$("#content").load("get.php");
+</script>

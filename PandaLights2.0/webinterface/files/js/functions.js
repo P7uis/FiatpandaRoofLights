@@ -1,3 +1,35 @@
+function _(el) {
+  return document.getElementById(el);
+}
+function uploadFile(id) {
+  var file = _(id).files[0];
+  // alert(file.name+" | "+file.size+" | "+file.type);
+  var formdata = new FormData();
+  formdata.append(id, file);
+  var ajax = new XMLHttpRequest();
+  ajax.upload.addEventListener("progress", progressHandler, false);
+  ajax.addEventListener("load", completeHandler, false);
+  ajax.addEventListener("error", errorHandler, false);
+  ajax.addEventListener("abort", abortHandler, false);
+  ajax.open("POST", "submit.php");
+  ajax.send(formdata);
+}
+
+function progressHandler(event) {
+  var percent = (event.loaded / event.total) * 100;
+  _("progressBar").value = Math.round(percent);
+}
+
+function completeHandler(event) {
+  _("progressBar").value = 0;
+  $("#content").load("get.php");
+}
+
+function errorHandler(event) {
+}
+
+function abortHandler(event) {
+}
 function appendText(profile) {
   var lastrow = parseInt($('#max' + profile).val())
   var newrow = lastrow + 1;

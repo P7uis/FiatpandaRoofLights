@@ -12,7 +12,31 @@
     ProfileEnabler($id);
     header("location: ../profiles");
   }
+  else if (isset($_FILES["profileconf"])) {
+      $target_dir = "/home/pi/panda/";
+      $target_file = $target_dir . basename($_FILES["profileconf"]["name"]);
+      $uploadOk = 1;
+      $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+      $target_file = $target_dir . "profiles.conf";
 
+      // Allow certain file formats
+      if ($imageFileType != "conf") {
+          $videomsg =  "Only .conf files are allowed";
+          $uploadOk = 0;
+      }
+      // Check if $uploadOk is set to 0 by an error
+      if ($uploadOk == 0) {
+          $videomsg =  "Sorry! The file wasn't uploaded.";
+      // if everything is ok, try to upload file
+      } else {
+          if (move_uploaded_file($_FILES["profileconf"]["tmp_name"], $target_file)) {
+              $videomsg = "The file <b>". basename($_FILES["profileconf"]["name"]). "</b> is succesfully uploaded.";
+          } else {
+              $videomsg = "Sorry! The file wasn't uploaded.";
+          }
+      }
+      header("location: ../profiles");
+  }
 
 else if(isset($_POST['name']) && isset($_POST['create'])){
   $i = 0;
