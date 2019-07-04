@@ -39,8 +39,18 @@ function sleep(milliseconds) {
   }
 }
 function refreshLight(){
+  console.log("refreshing button");
   $("#lightbtnnav").load("/jqueryloadbtn.php");
-  console.log("test");
+}
+function refreshCell(){
+  console.log("refreshing cells");
+  $('.carousel-cell').each(function () {
+    if(this.id == "ignore"){}
+    else {
+      //console.log("refreshed #"+this.id);
+      $("#"+this.id).load("jqueryloadcell.php?id="+this.id);
+    }
+  });
 }
 function appendText(profile) {
   var lastrow = parseInt($('#max' + profile).val())

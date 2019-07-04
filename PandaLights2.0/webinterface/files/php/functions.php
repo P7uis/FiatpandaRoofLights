@@ -62,6 +62,37 @@ function LightsToggle(){
   fclose($profilesW);
 }
 
+function GetCurrentProfileID(){
+  $user = get_current_user();
+  $profiles = fopen("/home/$user/panda/current.profile.conf", "r");
+  if (filesize("/home/$user/panda/current.profile.conf") == 0){
+    fclose($profiles);
+    return;
+  }
+  else{
+    $profilemain = explode(PHP_EOL, fread($profiles, filesize("/home/$user/panda/current.profile.conf")));
+    foreach ($profilemain as $profile) {
+      if (substr($profile, 0, 2) == "ID"){
+        $id = explode('-', $profile);
+        return $id[1];
+      }
+    }
+}
+}
+function GetCurrentProfileEnabled(){
+  $user = get_current_user();
+  $profiles = fopen("/home/$user/panda/current.enabled.conf", "r");
+  if (filesize("/home/$user/panda/current.enabled.conf") == 0){
+    fclose($profiles);
+    return;
+  }
+  else{
+    $toggle = explode(' ', fread($profiles, filesize("/home/$user/panda/current.enabled.conf")));
+    if($toggle[0] == "True")return True;
+    else return False;
+  }
+}
+
 function LightsList(){
   $user = get_current_user();
   $profiles = fopen("/home/$user/panda/current.enabled.conf", "r");
@@ -219,7 +250,7 @@ function ProfileSwiper(){
   else{
     echo '
 
-    <div class="carousel-cell">
+    <div class="carousel-cell" id="ignore">
     <form target="transFrame" action="manoverride.php" id="manoverride" method="post" class="swipeform">
     <iframe style="display: none;" name="transFrame" id="transFrame"></iframe>
       <h3>Manual Override</h3>
@@ -241,16 +272,34 @@ function ProfileSwiper(){
     $profilemain = explode(PHP_EOL, fread($profiles, filesize("/home/$user/panda/profiles.conf")));
     foreach ($profilemain as $profile) {
       if (substr($profile, 0, 2) == "ID"){
-        echo '<div class="carousel-cell">
-        <form target="transFrame" action="submit.php" method="post" class="swipeform">
-        <iframe style="display: none;" name="transFrame" id="transFrame"></iframe>';
         $id = explode('-', $profile);
         $id = $id[1];
-        echo '<input type="hidden" value="'.$id.'" name="enable">';
+        if(GetCurrentProfileEnabled() && GetCurrentProfileID() == $id){
+          echo '<div class="carousel-cell" id="'.$id.'">
+          <form target="transFrame" action="submit.php" method="post" class="swipeform" onsubmit="refreshall()">
+          <iframe style="display: none;" name="transFrame" id="transFrame"></iframe>';
+          echo '<input type="hidden" value="'.$id.'" name="disable">';
+        }
+        else{
+          echo '<div class="carousel-cell" id="'.$id.'">
+          <form target="transFrame" action="submit.php" method="post" class="swipeform" onsubmit="refreshall()">
+          <iframe style="display: none;" name="transFrame" id="transFrame"></iframe>';
+          echo '<input type="hidden" value="'.$id.'" name="enable">';
+          }
       }
       else if (substr($profile, 0, 4) == "NAME"){
       $name = explode('-', $profile);
       $name = $name[1];
+      if(GetCurrentProfileEnabled() && GetCurrentProfileID() == $id){
+        echo '
+          <h3>'.$name.'</h3><br><br>
+
+          <input type="submit" value="Disable" class="btn btn-danger btnswiper">
+          </form>
+        </div>
+        ';
+      }
+      else{
         echo '
           <h3>'.$name.'</h3><br><br>
 
@@ -258,7 +307,72 @@ function ProfileSwiper(){
           </form>
         </div>
         ';
+        }
+
       }
+      }
+
+    }
+  fclose($profiles);
+}
+
+function ProfileCell($id_input){
+  $user = get_current_user();
+  $profiles = fopen("/home/$user/panda/profiles.conf", "r");
+  if (filesize("/home/$user/panda/profiles.conf") == 0){
+    fclose($profiles);
+    return;
+  }
+  else{
+    $profilemain = explode(PHP_EOL, fread($profiles, filesize("/home/$user/panda/profiles.conf")));
+    foreach ($profilemain as $profile) {
+      if (substr($profile, 0, 2) == "ID"){
+        $id = explode('-', $profile);
+        $id = $id[1];
+        if($id_input == $id){
+          if(GetCurrentProfileEnabled() && GetCurrentProfileID() == $id){
+            echo '
+            <form target="transFrame" action="submit.php" method="post" class="swipeform" onsubmit="refreshall()">
+            <iframe style="display: none;" name="transFrame" id="transFrame"></iframe>';
+            echo '<input type="hidden" value="'.$id.'" name="disable">';
+          }
+          else{
+            echo '
+            <form target="transFrame" action="submit.php" method="post" class="swipeform" onsubmit="refreshall()">
+            <iframe style="display: none;" name="transFrame" id="transFrame"></iframe>';
+            echo '<input type="hidden" value="'.$id.'" name="enable">';
+            }
+        }
+
+      }
+      else if (substr($profile, 0, 4) == "NAME"){
+        if($id_input == $id){
+          $name = explode('-', $profile);
+          $name = $name[1];
+          if(GetCurrentProfileEnabled() && GetCurrentProfileID() == $id){
+            echo '
+              <h3>'.$name.'</h3><br><br>
+
+              <input type="submit" value="Disable" class="btn btn-danger btnswiper">
+              </form>
+
+            ';
+          }
+          else{
+            echo '
+              <h3>'.$name.'</h3><br><br>
+
+              <input type="submit" value="Enable" class="btn btn-success btnswiper">
+              </form>
+
+            ';
+            }
+            return;
+        }
+
+
+      }
+
       }
 
     }
@@ -343,6 +457,14 @@ function ProfileEnabler($id){
   fwrite($profilesW, $toggle);
   fclose($profilesW);
 }}
+
+function ProfileDisabler($id){
+  $user = get_current_user();
+  $toggle = "False";
+  $profilesW = fopen("/home/$user/panda/current.enabled.conf", "w");
+  fwrite($profilesW, $toggle);
+  fclose($profilesW);
+}
 
 function ProfileCreater($id, $name, $cycles){
 

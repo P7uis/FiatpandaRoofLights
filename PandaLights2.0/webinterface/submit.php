@@ -13,4 +13,10 @@
     ProfileEnabler($id);
     header("location: ../");
   }
+  else if(isset($_POST['disable'])){
+    $id = "ID-".$_POST['disable'];
+    echo "$id";
+    ProfileDisabler($id);
+    header("location: ../");
+  }
   ?>

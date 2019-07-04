@@ -35,18 +35,24 @@
 
       $( "#manoverride" ).submit();
     }
-
     $('.swipeform').submit(function(e) {
     e.preventDefault();
     this.submit();
+    for(var i = 0; i < 5; i++){
       setTimeout( function () {
-         refreshLight()
-     }, 300);
-     setTimeout( function () {
-        refreshLight()
-    }, 300);
-    setTimeout( function () {
-       refreshLight()
-   }, 300);
-    });
+         refreshLight();
+         refreshCell();
+     }, 1000);
+    }
+  });
+
+  function refreshall(){
+    for(var i = 0; i < 5; i++){
+      setTimeout( function () {
+         refreshLight();
+         refreshCell();
+     }, 1000);
+    }
+  }
+
 </script>
