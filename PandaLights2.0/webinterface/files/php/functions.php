@@ -197,7 +197,7 @@ function ProfileLister(){
               echo '&ensp;</div></div>';
             }
             else{
-                echo '<input type="number" required min=0.1 max=60 step=0.05 name="delay'.$i.'" value="'.StringBetween($cycle, '[', ']').'" class="form-control delay'.$h.' input-style" placeholder="delay">';
+                echo '<input type="number" required min=0.05 max=60 step=0.05 name="delay'.$i.'" value="'.StringBetween($cycle, '[', ']').'" class="form-control delay'.$h.' input-style" placeholder="delay">';
                 $i++;
                 echo "</div>";
             }
