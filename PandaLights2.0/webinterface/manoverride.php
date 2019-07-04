@@ -34,8 +34,8 @@ if(isset($_POST['manoverride'])){
   if (isset($_POST['Light4']))$l4 = 1; else $l4 = 0;
   if (isset($_POST['Light5']))$l5 = 1; else $l5 = 0;
   $lights = $l1.','.$l2.','.$l3.','.$l4.','.$l5;
-  echo 'mosquitto_pub -h 172.10.0.102 -p 1883 -t PandaLights -m "'.$lights.'"';
-  exec('mosquitto_pub -h 172.10.0.102 -p 1883 -t PandaLights -m "'.$lights.'"');
+  echo 'mosquitto_pub -h 10.0.0.1 -p 1883 -t PandaLights -m "'.$lights.'"';
+  exec('mosquitto_pub -h 10.0.0.1 -p 1883 -t PandaLights -m "'.$lights.'"');
   header("location: /index.php");
 }
 

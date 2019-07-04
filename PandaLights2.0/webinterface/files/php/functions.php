@@ -121,7 +121,7 @@ function ProfileLister(){
            <div class="input-group-append "><span class="input-group-text alt-input-style">profile name</span></div>
         </div>
         <div class="input-group mb-1">
-           <input type="number" id="alldelay'.$h.'" onchange="DelayChanger('.$h.')"onchange="DelayChanger('.$h.')" required class="form-control input-style" min="0.1" max="60" step="0.05" value="1" placeholder="delay">
+           <input type="number" id="alldelay'.$h.'" onchange="DelayChanger('.$h.')"onchange="DelayChanger('.$h.')" required class="form-control input-style" min="0.05" max="60" step="0.05" value="0.25" placeholder="delay">
            <div class="input-group-append "><span class="input-group-text alt-input-style">change all delays</span></div>
         </div>
         <br>
@@ -136,7 +136,7 @@ function ProfileLister(){
                 <input type="checkbox" onchange="appendText('.$h.')" value="1" name="profile004" class="profilecheck">&ensp;
               </div>
            </div>
-           <input type="number" required min="0.1" max="60" step="0.05" name="delay'.$h.'" value="1" class="form-control delay'.$h.' input-style" placeholder="delay">
+           <input type="number" required min="0.05" max="60" step="0.05" name="delay'.$h.'" value="0.25" class="form-control delay'.$h.' input-style" placeholder="delay">
         </div>
         </div>
         <br>
@@ -173,7 +173,7 @@ function ProfileLister(){
               <input type="text" required class="form-control input-style" placeholder="profile name" value="'.$name[1].'" name="name">
               <div class="input-group-append "><span class="input-group-text alt-input-style">profile name</span></div></div>';
         echo '<div class="input-group mb-1">
-              <input type="number" id="alldelay'.$h.'" onchange="DelayChanger('.$h.')"required class="form-control input-style" min=0.1 max=60 step=0.05 value="1" placeholder="delay">
+              <input type="number" id="alldelay'.$h.'" onchange="DelayChanger('.$h.')"required class="form-control input-style" min=0.05 max=60 step=0.05 value="0.25" placeholder="delay">
               <div class="input-group-append "><span class="input-group-text alt-input-style">change all delays</span></div></div><br>';
       }
 
